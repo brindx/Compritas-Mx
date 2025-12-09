@@ -17,10 +17,15 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+import { SpeedInsights } from "@vercel/speed-insights/react"
+
+// ... imports
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <App />
+      <SpeedInsights />
     </AuthProvider>
   </StrictMode>,
 )
