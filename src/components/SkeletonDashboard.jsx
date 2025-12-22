@@ -27,7 +27,7 @@ const SkeletonDashboard = () => {
                 {/* Main Panel Skeleton */}
                 <div className="skeleton-panel">
                     {/* Panel Header (Total Card + Title) */}
-                    <div className="skeleton-panel-header"></div>
+                    <div className="skeleton skeleton-panel-header"></div>
 
                     {/* Product List/Table */}
                     <div className="skeleton-table">

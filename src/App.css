@@ -1,32 +1,30 @@
 /* ==========================================================================
-   APP LAYOUT
+   APP LAYOUT - Glass Architecture
    ========================================================================== */
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   height: 100dvh;
-  /* Dynamic viewport height for mobile */
   width: 100vw;
-  background: #ffffff;
-  /* brighter base background */
+  background: transparent;
+  /* Allow body gradient to show */
   overflow: hidden;
 }
 
 /* ==========================================================================
-   HEADER - Professional Blue Design
-   ========================================================================== */
-/* ==========================================================================
-   HEADER - Professional Mobile-First Design
+   HEADER - Glassmorphism & Light Theme
    ========================================================================== */
 .app-header {
-  background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
-  color: white;
+  background: var(--bg-glass);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-bottom: 0.5px solid var(--glass-border);
+  color: var(--text-primary);
   padding: calc(0.5rem + env(safe-area-inset-top)) 1rem 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
   position: relative;
   z-index: 100;
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
   flex-shrink: 0;
 }
 
@@ -36,22 +34,15 @@
   }
 }
 
-/* Accent line at bottom */
+/* Remove Accent line or make it subtle? Let's remove for cleaner look */
 .app-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #3b82f6;
+  content: none;
 }
 
 /* Header Content Container */
 .header-content {
   display: flex;
   flex-direction: column;
-  /* Stack vertically on mobile */
   gap: 1rem;
   width: 100%;
 }
@@ -80,17 +71,18 @@
   }
 }
 
-/* Mobile Menu Button */
+/* Mobile Menu Button - Inverse adaptation */
 .mobile-menu-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  /* Darker tint for light mode */
   border: none;
   border-radius: 8px;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
@@ -98,7 +90,7 @@
 }
 
 .mobile-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 1024px) {
@@ -116,9 +108,10 @@
 
 .app-title {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
-  color: white;
+  color: var(--primary-600);
+  /* Brand Blue Text */
   letter-spacing: -0.01em;
 }
 
@@ -133,20 +126,21 @@
   margin: 0;
   opacity: 0.9;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
+  /* Grey text */
 }
 
-/* Stats Section - Visible on Mobile now */
+/* Stats Section */
 .header-stats {
   display: flex;
   justify-content: space-around;
-  /* Distribute evenly */
   align-items: center;
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.03);
+  /* Subtle grey fill */
   padding: 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 @media (min-width: 1024px) {
@@ -170,6 +164,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1;
+  color: var(--text-primary);
 }
 
 @media (min-width: 768px) {
@@ -184,13 +179,14 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 0.25rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--text-tertiary);
 }
 
 .stat-divider {
   width: 1px;
   height: 24px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--border-color);
 }
 
 /* User Profile Section */
@@ -198,21 +194,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Spread content */
   gap: 0.75rem;
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.03);
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 @media (min-width: 1024px) {
   .header-user {
     width: auto;
-    background: rgba(255, 255, 255, 0.15);
+    background: transparent;
     padding: 0.5rem 1rem;
-    backdrop-filter: blur(10px);
+    backdrop-filter: none;
+    border: none;
+    /* Removed border in desktop for cleaner look */
   }
 }
 
@@ -220,7 +217,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Align left on mobile */
   flex: 1;
   overflow: hidden;
 }
@@ -228,7 +224,6 @@
 @media (min-width: 1024px) {
   .user-info {
     align-items: flex-end;
-    /* Align right on desktop */
     margin-right: 0.75rem;
   }
 }
@@ -236,7 +231,7 @@
 .user-name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
@@ -244,7 +239,7 @@
   font-size: 0.75rem;
   opacity: 0.8;
   font-weight: 400;
-  color: white;
+  color: var(--text-secondary);
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -254,14 +249,16 @@
 /* Logout Button */
 .header-user .btn {
   font-weight: 600;
-  color: #1e3a8a !important;
-  background: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--danger) !important;
+  /* Red text for logout */
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: none;
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   border-radius: 6px;
   flex-shrink: 0;
+  transition: all 0.2s;
 }
 
 .header-user .btn svg {
@@ -271,11 +268,12 @@
 }
 
 .header-user .btn:hover {
-  background: #f1f5f9 !important;
+  background: var(--danger-light) !important;
+  border-color: var(--danger) !important;
 }
 
 /* ==========================================================================
-   MAIN CONTENT - TWO COLUMN LAYOUT
+   MAIN CONTENT - Transparent for Glass Effect
    ========================================================================== */
 .main-content {
   display: flex;
@@ -283,8 +281,8 @@
   overflow: hidden;
   min-height: 0;
   position: relative;
-  background: #ffffff;
-  /* keep content area bright */
+  background: transparent;
+  /* Changed from white to transparent */
 }
 
 /* Sidebar Overlay for Mobile */

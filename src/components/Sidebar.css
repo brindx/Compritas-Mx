@@ -4,13 +4,20 @@
 .sidebar {
     width: 280px;
     flex-shrink: 0;
-    background: #ffffff;
-    border-right: 1px solid var(--border-color);
+
+    /* Glassmorphism Effect */
+    background: var(--bg-glass);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border-right: 1px solid var(--glass-border);
+
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
     transition: transform 0.3s ease;
+    z-index: 50;
+    /* Ensure glass stays on top of content below if mobile */
 }
 
 /* Mobile Sidebar - Slide-in Drawer */
@@ -36,8 +43,9 @@
 
 .sidebar-header {
     padding: 1.25rem;
-    border-bottom: 1px solid var(--border-color);
-    background: #ffffff;
+    border-bottom: 1px solid var(--glass-border);
+    background: transparent;
+    /* Let glass shine through */
 }
 
 @media (min-width: 768px) {
@@ -50,7 +58,7 @@
     font-size: 1.125rem;
     font-weight: 800;
     margin-bottom: 0.75rem;
-    color: #000000;
+    color: var(--text-primary);
     letter-spacing: -0.01em;
 }
 
@@ -69,8 +77,9 @@
 /* Create List Form */
 .create-list-form {
     padding: 1.25rem;
-    background: var(--neutral-50);
-    border-bottom: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    /* Subtle inner tint */
+    border-bottom: 1px solid var(--glass-border);
     animation: slideDown 0.3s ease-out;
 }
 
@@ -100,7 +109,7 @@
     font-family: inherit;
     outline: none;
     transition: all 0.2s;
-    background: #ffffff;
+    background: var(--bg-surface);
 }
 
 .list-name-input:focus {
@@ -122,12 +131,25 @@
     flex: 1;
     overflow-y: auto;
     padding: 1rem;
-    background: var(--neutral-50);
+    background: transparent;
+    /* Clean scroll */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.lists-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
 }
 
 /* List Card - Clean Professional */
 .list-card {
-    background: #ffffff;
+    background: var(--bg-surface);
+    /* Keep cards mostly solid for readability */
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 1.25rem;
@@ -138,6 +160,13 @@
     position: relative;
     /* Animation Entrance */
     animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+
+    /* Subtle transparency on cards too? Maybe too much. Let's keep them solid but with glass border vibe */
+    background: rgba(var(--bg-surface-rgb), 0.8);
+    /* Need RGB var for this. Stick to solid for now for contrast */
+    background: var(--bg-glass-hover);
+    /* A bit more opaque than sidebar bg */
+    border-color: var(--glass-border);
 }
 
 /* Stagger List Items (up to 10 items) */
@@ -202,7 +231,7 @@
 
 .list-card.active {
     border-color: var(--primary-500);
-    background: #ffffff;
+    background: var(--bg-surface);
     box-shadow: 0 0 0 1px var(--primary-500), 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
@@ -241,7 +270,7 @@
 .list-card-title {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-primary);
     margin: 0;
     line-height: 1.4;
     word-break: break-word;
@@ -259,12 +288,12 @@
     align-items: center;
     gap: 0.35rem;
     font-size: 0.8rem;
-    color: #6b7280 !important;
+    color: var(--text-secondary) !important;
     font-weight: 500;
 }
 
 .list-date svg {
-    color: #6b7280 !important;
+    color: var(--text-secondary) !important;
     opacity: 1 !important;
 }
 
@@ -285,7 +314,7 @@
 .stat-value {
     font-size: 1rem;
     font-weight: 700;
-    color: #111827 !important;
+    color: var(--text-primary) !important;
     line-height: 1.2;
 }
 
@@ -297,7 +326,7 @@
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #6b7280 !important;
+    color: var(--text-secondary) !important;
     font-weight: 600;
     margin-top: 2px;
 }
@@ -364,7 +393,7 @@
 .empty-state {
     text-align: center;
     padding: 3rem 1.5rem;
-    color: #000000;
+    color: var(--text-primary);
     /* PURE BLACK */
     font-weight: 600;
     /* Bolder text */
@@ -376,7 +405,7 @@
     opacity: 0.8;
     /* Less transparent */
     display: block;
-    color: #000000;
+    color: var(--text-primary);
     /* PURE BLACK */
 }
 
