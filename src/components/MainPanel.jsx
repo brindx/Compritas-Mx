@@ -238,6 +238,45 @@ const MainPanel = ({ list, onAddItem, onDeleteItem, onUpdateItem, onUpdateList }
                         {list.name}
                     </motion.h1>
                     <p className="sub-title">Gestiona los artículos de tu lista de compras actual.</p>
+
+                    <div className="header-actions" style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => {
+                                const text = `🛒 *${list.name}*\nTotal aprox: $${calculateTotal().toFixed(2)}\n\n${list.items.map(item => `${item.checked ? '✅' : '◻️'} ${item.name} ${item.note ? `(${item.note})` : ''}`).join('\n')}`;
+                                navigator.clipboard.writeText(text);
+                                showToast.success('¡Lista copiada al portapapeles!');
+                            }}
+                            title="Copiar lista para WhatsApp"
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>share</span>
+                            Compartir
+                        </motion.button>
+
+                        {list.items.some(i => i.checked) && (
+                            <motion.button
+                                whileHover={{ scale: 1.05, color: '#ef4444' }}
+                                whileTap={{ scale: 0.95 }}
+                                className="btn btn-secondary btn-sm"
+                                style={{ color: 'var(--text-secondary)' }}
+                                onClick={() => {
+                                    showToast.confirm(
+                                        '¿Borrar productos marcados?',
+                                        () => {
+                                            const newItems = list.items.filter(item => !item.checked);
+                                            onUpdateList({ items: newItems });
+                                            showToast.success('Limpieza completada');
+                                        }
+                                    );
+                                }}
+                                title="Eliminar completados"
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>cleaning_services</span>
+                            </motion.button>
+                        )}
+                    </div>
                 </div>
 
                 <motion.div
@@ -287,6 +326,37 @@ const MainPanel = ({ list, onAddItem, onDeleteItem, onUpdateItem, onUpdateList }
                     {editingId ? 'Editar producto' : 'Añadir nuevo producto'}
                 </h2>
                 <form className="add-form" onSubmit={handleSubmit}>
+
+                    {/* Quick Add Chips - Sugerencias Rápidas */}
+                    {!editingId && (
+                        <div className="quick-suggestions">
+                            <span className="suggestions-label">Rápidos:</span>
+                            <div className="chips-scroll">
+                                {COMMON_PRODUCTS.slice(0, 6).map((prod) => {
+                                    const catIcon = CATEGORIES.find(c => c.id === prod.category)?.icon || '🛒';
+                                    return (
+                                        <motion.button
+                                            key={prod.name}
+                                            type="button"
+                                            whileHover={{ scale: 1.05, backgroundColor: 'var(--navy-100)' }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="suggestion-chip"
+                                            onClick={() => setNewItem({
+                                                name: prod.name,
+                                                price: prod.price.toString(),
+                                                category: prod.category,
+                                                note: '',
+                                                link: ''
+                                            })}
+                                        >
+                                            {catIcon} {prod.name}
+                                        </motion.button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+
                     <datalist id="product-suggestions">
                         {COMMON_PRODUCTS.map((prod) => (
                             <option key={prod.name} value={prod.name} />
@@ -472,7 +542,10 @@ const MainPanel = ({ list, onAddItem, onDeleteItem, onUpdateItem, onUpdateList }
                                                                 {item.name}
                                                             </span>
                                                             {item.category && (
-                                                                <span className="category-badge">
+                                                                <span
+                                                                    className="category-badge"
+                                                                    data-category={item.category}
+                                                                >
                                                                     {CATEGORIES.find(c => c.id === item.category)?.name}
                                                                 </span>
                                                             )}

@@ -77,9 +77,9 @@
 /* Create List Form */
 .create-list-form {
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    /* Subtle inner tint */
-    border-bottom: 1px solid var(--glass-border);
+    background: var(--navy-50);
+    /* Accent Block */
+    border-bottom: 1px solid var(--border-color);
     animation: slideDown 0.3s ease-out;
 }
 
@@ -110,6 +110,24 @@
     outline: none;
     transition: all 0.2s;
     background: var(--bg-surface);
+}
+
+.create-list-form .btn {
+    width: 100%;
+    background: var(--navy-700);
+    /* Strong Navy */
+    color: white;
+    font-weight: 600;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    border: none;
+}
+
+.create-list-form .btn:hover {
+    background: var(--navy-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .list-name-input:focus {
